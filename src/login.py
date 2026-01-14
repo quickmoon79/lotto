@@ -49,13 +49,13 @@ def login(page: Page) -> None:
         raise ValueError("❌ USER_ID or PASSWD not found in environment variables.")
     
     print('Starting login process...')
-    page.goto("https://www.dhlottery.co.kr/login")
+    page.goto("https://www.dhlottery.co.kr/login",wait_until="domcontentloaded",timeout=12000)
     
     page.locator("#inpUserId").fill(USER_ID)
     page.locator("#inpUserPswdEncn").fill(PASSWD)
     page.click("#btnLogin")
     
     # Wait for login to complete
-    page.wait_for_load_state("networkidle")
+    page.wait_for_selector("text=로그아웃", timeout=60000)
     print('✅ Logged in successfully')
 
